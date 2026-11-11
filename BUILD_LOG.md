@@ -204,6 +204,30 @@ Each entry: **What happened** · **Decisions** · **Ownership** (my direction vs
 
 ---
 
+## 2026-11-11 · Build step 2: the hero
+
+**What happened:** Built the hero in Next.js from the approved mockup, using design-system components only. Every new piece is reusable on its own.
+
+**Built:**
+- New reusable components: **TypedLine** (typed rotating lines), **ChatInput** (glass pill with send), **QuickTile** (icon chip), **AnswerCard**, **Wordmark** and **GlowBackdrop** (decorative backgrounds).
+- **Hero section** assembled from them: Hello | Hallo switch, status pill, fluid portrait with splashes, headline, title, typed lines, tech line, chat box with five quick topics, Download CV / GitHub / LinkedIn, and the faint "Godwin" wordmark behind.
+- **Content separated from layout:** all hero copy (English and German) lives in `src/content/hero.ts`.
+- New theme tokens for tile icon colours and the second glow, so no colours went into components.
+- **First tests:** Vitest with 11 unit tests (random line order never repeats, the contact email link is encoded correctly, English and German content are complete). Tests now run in CI.
+
+**Decisions made by the agent (open for my review):**
+- Typed questions show a "coming soon" note until the real AI chat (step 5); the five topic tiles give real answers now.
+- The **voice button is left out** until I decide on voice input.
+- TypedLine starts with the first line fully shown (it matches the server-rendered HTML, so there's no flash), then continues in random order.
+
+**Problems and fixes:** On the first visit, React shows the server version of a page before taking over in the browser. A typing animation that starts from zero would make the line flash full, then empty, then type. Solved by starting with the full first line, which is also what screen readers and reduced-motion visitors get.
+
+**Verified:** lint, type check, theme rule, 11 tests and the build pass. Checked in Chrome: desktop light/dark, the German switch, a quick-topic answer, typing in random order, phone (375px) and tablet (768px).
+
+**LinkedIn angle:** "My hero section is 100% reusable components. The typing effect is a component, the chat box is a component, and even the faint background wordmark is a component I can drop into my next project."
+
+---
+
 ## 2026-11-11 · GitHub repo, commits and CI/CD
 
 **What happened:** I asked for a GitHub repo, and to be walked through how the commits are made. Mid-way I added CI/CD: every change should be checked automatically, and the live site should update as we keep changing it.

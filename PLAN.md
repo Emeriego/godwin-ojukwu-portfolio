@@ -67,8 +67,8 @@ This site is itself a case study, so it should show the six competencies too:
 ## Build order
 
 1. ~~Design system and layout: tokens, themes, glass, nav, footer, page skeleton~~ ✅
-2. **Hero** (UI first; the chat answers are canned until step 5) ← *next*
-3. ComBridge and Projects
+2. ~~Hero (UI first; the chat answers are canned until step 5)~~ ✅
+3. **ComBridge and Projects** ← *next*
 4. Remaining sections
 5. AI chat backend (Route Handler + Gemini, rate limit, streaming)
 6. German version (i18n routes, detection, switch)
