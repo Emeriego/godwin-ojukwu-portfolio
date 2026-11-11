@@ -204,6 +204,16 @@ Each entry: **What happened** · **Decisions** · **Ownership** (my direction vs
 
 ---
 
+## 2026-11-11 · Review: the wordmark should touch the next section
+
+**What happened:** I noticed the faint "Godwin" wordmark ended about 20px above the hero's bottom edge. In the approved design, the letters run into the boundary, so they look embedded, as if coming from the next section.
+
+**Fix:** The offset was a fixed `6rem`, while the wordmark's size changes with the screen. It's now `0.42em`, relative to the wordmark's own font size, so the letters meet the edge at every size. Checked in Chrome on desktop (1440px), phone (375px) and TV (1920px).
+
+**Lesson:** For decoration tied to a text's size, position it in `em`, not `rem` or pixels, or it drifts as the text scales.
+
+---
+
 ## 2026-11-11 · Review: "the typing doesn't run in Safari"
 
 **What happened:** Reviewing the hero in Safari, I found the typed lines didn't run and the Hello | Hallo switch did nothing, although the portrait shape still morphed.

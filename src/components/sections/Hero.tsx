@@ -38,7 +38,8 @@ export default function Hero() {
   return (
     <section aria-labelledby="hero-title" className="relative overflow-hidden pb-[4.5rem] pt-10 sm:pt-12">
       <GlowBackdrop />
-      <Wordmark text={site.firstName} className="-bottom-24" />
+      {/* Offset in em so the letters always meet the section edge, at every screen size */}
+      <Wordmark text={site.firstName} className="-bottom-[0.42em]" />
 
       <Container size="md" className="relative z-10 flex flex-col items-center gap-[1.125rem] text-center">
         <div className="flex flex-wrap items-center justify-center gap-2.5">
