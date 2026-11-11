@@ -131,6 +131,11 @@ import { FluidPortrait, PhoneMockup } from "@/components/media";
 | `Container` | size: sm · md · lg · xl · full |
 | `Section` | tone: default · alt · none — spacing: none · sm · md · lg |
 | `Stack` | direction · gap · align · justify · wrap |
+| `TypedLine` | lines · typeSpeed · eraseSpeed · hold (random order, reduced-motion safe) |
+| `ChatInput` | label · placeholder · onSubmit · extraAction |
+| `QuickTile` | icon · label · iconClassName · active |
+| `AnswerCard` | question · answer |
+| `Wordmark` / `GlowBackdrop` | decorative backgrounds for a `relative overflow-hidden` section |
 
 ---
 

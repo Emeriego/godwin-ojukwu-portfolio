@@ -7,3 +7,8 @@ export { Container, Section, Stack, containerVariants, sectionVariants, stackVar
 export { Surface, surfaceVariants } from "./Surface";
 export { Chip, StatusPill, chipVariants } from "./Chip";
 export { SegmentedControl } from "./SegmentedControl";
+export { TypedLine } from "./TypedLine";
+export { ChatInput } from "./ChatInput";
+export { QuickTile } from "./QuickTile";
+export { AnswerCard } from "./AnswerCard";
+export { Wordmark, GlowBackdrop } from "./Decor";
