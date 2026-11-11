@@ -204,6 +204,20 @@ Each entry: **What happened** · **Decisions** · **Ownership** (my direction vs
 
 ---
 
+## 2026-11-11 · Review: "the typing doesn't run in Safari"
+
+**What happened:** Reviewing the hero in Safari, I found the typed lines didn't run and the Hello | Hallo switch did nothing, although the portrait shape still morphed.
+
+**Investigation:** The agent checked the same page in Chrome (everything worked), my Safari version (26.5, the latest) and the reduce-motion setting (off). The clue: the morphing shape is pure CSS, while the switch and typing need JavaScript, so in Safari the JavaScript wasn't starting. The dev server log showed Next.js had **blocked its dev resources for the network address `192.168.178.22`**. Safari had opened the site through that "Network" URL instead of `localhost`, and Next.js blocks other origins in development for security.
+
+**Fix:** Open `http://localhost:3000` in Safari. Confirmed working. No code change; development only, so the live site is unaffected. (Testing on a phone over Wi-Fi would need the address added to `allowedDevOrigins`.)
+
+**Lesson:** "Works in Chrome, broken in Safari" isn't always a browser bug. Separating what needs CSS from what needs JavaScript pointed straight at the cause, and the server log confirmed it.
+
+**LinkedIn angle:** "'It doesn't work in Safari.' The real cause was the URL, not Safari. How one server log line saved me from 'fixing' working code."
+
+---
+
 ## 2026-11-11 · The CV gets its own page
 
 **What happened:** I remembered that my old portfolio presented the CV right on the site. Visitors shouldn't have to download a file to read it; downloading should be optional. The agent compared a PDF viewer overlay with a real web page, and I chose **a dedicated `/cv` page**, like the project case studies.
