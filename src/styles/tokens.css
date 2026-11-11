@@ -42,6 +42,16 @@
   --device-screen: #101211;
   --device-ink: #f5f5f7;
   --device-muted: #a1a1a6;
+
+  /* Icon accents for quick-topic tiles (deep for light mode, soft for dark mode) */
+  --tile-teal-deep: #0f8a78;
+  --tile-teal-soft: #5dcaa5;
+  --tile-purple-deep: #6a5acd;
+  --tile-purple-soft: #afa9ec;
+  --tile-amber-deep: #a86a12;
+  --tile-amber-soft: #ef9f27;
+  --tile-pink-deep: #b03a6a;
+  --tile-pink-soft: #ed93b1;
 }
 
 /* ---------- 2. Semantic tokens: light ---------- */
@@ -68,6 +78,13 @@
   --blob: linear-gradient(150deg, var(--brand-secondary), var(--brand-primary));
   --glow: color-mix(in srgb, var(--brand-primary) 30%, transparent);
   --blob-shadow: color-mix(in srgb, var(--brand-primary-deep) 22%, transparent);
+  --glow-2: color-mix(in srgb, var(--brand-secondary) 26%, transparent);
+
+  --tile-teal: var(--tile-teal-deep);
+  --tile-green: var(--brand-primary-deep);
+  --tile-purple: var(--tile-purple-deep);
+  --tile-amber: var(--tile-amber-deep);
+  --tile-pink: var(--tile-pink-deep);
   color-scheme: light;
 }
 
@@ -94,5 +111,12 @@
   --blob: linear-gradient(150deg, var(--brand-secondary), var(--brand-primary));
   --glow: color-mix(in srgb, var(--brand-primary) 30%, transparent);
   --blob-shadow: color-mix(in srgb, black 30%, transparent);
+  --glow-2: color-mix(in srgb, var(--brand-secondary) 22%, transparent);
+
+  --tile-teal: var(--tile-teal-soft);
+  --tile-green: color-mix(in srgb, var(--brand-primary) 70%, white);
+  --tile-purple: var(--tile-purple-soft);
+  --tile-amber: var(--tile-amber-soft);
+  --tile-pink: var(--tile-pink-soft);
   color-scheme: dark;
 }
