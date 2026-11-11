@@ -204,6 +204,23 @@ Each entry: **What happened** · **Decisions** · **Ownership** (my direction vs
 
 ---
 
+## 2026-11-11 · GitHub repo, commits and CI/CD
+
+**What happened:** I asked for a GitHub repo, and to be walked through how the commits are made. Mid-way I added CI/CD: every change should be checked automatically, and the live site should update as we keep changing it.
+
+**Decisions:**
+- Repo: **public**, `godwin-ojukwu-portfolio`, so recruiters can read the code and this log. CVs stay out (`reference/` is git-ignored).
+- **Workflow:** work on a branch, open a **pull request**, review, merge to `main`.
+- **Commits:** 8 small, logical commits following the **Conventional Commits** style (`feat:`, `docs:`, `build:`, `chore:`), each one a single idea with a clear message, instead of one giant "initial" commit.
+- **CI (GitHub Actions):** on every push and pull request, run lint → type check → the theme rule (no hard-coded colours in components) → production build.
+- **CD (Vercel):** preview deploy for every pull request, production deploy when `main` changes. Set up with my Vercel account.
+
+**Ownership:** The repo, PR workflow and CI/CD requirement were mine. The agent chose the commit breakdown and the CI steps, and turned the "no hex codes" design rule into an automated check, so the theme system can't silently break again.
+
+**LinkedIn angle:** "My portfolio now has CI/CD. Every change is linted, type-checked, rule-checked and built before it can reach the live site, including a custom check that keeps my design system honest."
+
+---
+
 ## 2026-11-11 · A central theme system
 
 **What happened:** I asked for colours to be managed centrally, so changing a colour once updates every component, with no hunting through files.
