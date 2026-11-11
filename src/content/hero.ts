@@ -68,7 +68,7 @@ export const heroCopy: Record<Lang, HeroCopy> = {
       },
     },
     pendingAnswer: "The AI assistant is coming soon. It will answer here using Godwin's CV and projects. Meanwhile, try one of the topics below.",
-    cv: "Download CV",
+    cv: "View CV",
   },
   de: {
     status: "Offen für Stellen als Softwareentwickler in Deutschland",
@@ -117,7 +117,7 @@ export const heroCopy: Record<Lang, HeroCopy> = {
       },
     },
     pendingAnswer: "Der KI-Assistent kommt bald. Er antwortet hier auf Basis von Godwins Lebenslauf und Projekten. Probieren Sie bis dahin eines der Themen unten.",
-    cv: "Lebenslauf herunterladen",
+    cv: "Lebenslauf ansehen",
   },
 };
 

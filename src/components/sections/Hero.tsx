@@ -100,7 +100,7 @@ export default function Hero() {
         </div>
 
         <div className="mt-2 flex flex-wrap items-center justify-center gap-1">
-          <Button variant="secondary" href={site.cv} icon={<Icon name="download" size={17} />}>
+          <Button variant="secondary" href="/cv" icon={<Icon name="file" size={17} />}>
             {copy.cv}
           </Button>
           <Button variant="ghost" href={site.links.github} icon={<Icon name="github" size={17} />}>
