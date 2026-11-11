@@ -1,26 +1,52 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/ui.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ---------- Responsive base ----------
+   Everything is sized in rem, so the whole site scales with the root size:
+   16px on phones and laptops, a bit more on large desktops, much more on TVs. */
+html {
+  scroll-behavior: smooth;
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@media (min-width: 1680px) {
+  html {
+    font-size: 106.25%; /* 17px */
+  }
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@media (min-width: 1920px) {
+  html {
+    font-size: 118.75%; /* 19px: TVs and large monitors */
+  }
+}
+@media (min-width: 2560px) {
+  html {
+    font-size: 150%; /* 24px: 4K TVs */
   }
 }
 
+/* Keep in-page jumps clear of the sticky nav */
+[id] {
+  scroll-margin-top: 6rem;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

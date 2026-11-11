@@ -1,0 +1,62 @@
+/*
+  Tailwind wiring for the design system: token colours, effects and animations.
+  Import after "tailwindcss" and tokens.css.
+*/
+
+/* `dark:` follows <html data-theme="dark"> */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-text: var(--text);
+  --color-sec: var(--sec);
+  --color-faint: var(--faint);
+  --color-chip: var(--chip);
+  --color-line: var(--glass-border);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-highlight: var(--highlight);
+  --color-brand: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-glow: var(--glow);
+  --color-device-frame: var(--device-frame);
+  --color-device-screen: var(--device-screen);
+  --color-device-ink: var(--device-ink);
+  --color-device-muted: var(--device-muted);
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+@theme {
+  --animate-morph: morph 14s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes morph {
+    0%, 100% { border-radius: 58% 42% 38% 62% / 52% 44% 56% 48%; }
+    20% { border-radius: 42% 58% 62% 38% / 46% 58% 42% 54%; }
+    40% { border-radius: 50% 50% 34% 66% / 60% 40% 60% 40%; }
+    60% { border-radius: 64% 36% 52% 48% / 42% 56% 44% 58%; }
+    80% { border-radius: 46% 54% 58% 42% / 56% 46% 54% 44%; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(-5px); }
+    50% { transform: translateY(5px); }
+  }
+}
+
+/* Frosted glass surface */
+@utility glass {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  /* Tailwind's own backdrop utilities: a raw backdrop-filter declaration here gets dropped by the CSS compiler */
+  @apply backdrop-blur-xl backdrop-saturate-150;
+}
+
+/* Green-to-lime text */
+@utility text-gradient {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
