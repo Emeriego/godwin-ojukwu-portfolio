@@ -12,3 +12,5 @@ export { ChatInput } from "./ChatInput";
 export { QuickTile } from "./QuickTile";
 export { AnswerCard } from "./AnswerCard";
 export { Wordmark, GlowBackdrop } from "./Decor";
+export { TimelineItem } from "./TimelineItem";
+export { PrintButton } from "./PrintButton";
