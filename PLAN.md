@@ -45,6 +45,8 @@ Visual reference: the design mockup (light, dark and About artboards) on claude.
 8. **About:** the photo mosaic and "Designer's eye. Engineer's mind."
 9. **Skills:** grouped, including Data & AI
 10. **Contact:** a final call to action
+
+**CV page (`/cv`):** the full CV as a designed web page (data from `src/content/cv.ts`), with Download PDF and Print. The hero's "View CV" button opens it. ✅
 11. **Footer:** privacy note
 
 ## Case-study template

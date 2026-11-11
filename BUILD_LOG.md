@@ -204,6 +204,30 @@ Each entry: **What happened** · **Decisions** · **Ownership** (my direction vs
 
 ---
 
+## 2026-11-11 · The CV gets its own page
+
+**What happened:** I remembered that my old portfolio presented the CV right on the site. Visitors shouldn't have to download a file to read it; downloading should be optional. The agent compared a PDF viewer overlay with a real web page, and I chose **a dedicated `/cv` page**, like the project case studies.
+
+**Decisions:**
+- **A real HTML CV, not an embedded PDF:** readable on phones (embedded PDFs often aren't), searchable, accessible, themed, shareable as a link in job applications.
+- **"Download PDF" and "Print" on the page;** the hero button changed from "Download CV" to **"View CV"**.
+- **One source of truth:** the CV lives as data in `src/content/cv.ts`. The `/cv` page and the future Experience section both read from it, so they can't contradict each other (the problem we found across my old CVs).
+- **Print layout:** nav, footer and buttons are hidden, colours always light, no glass, so "Print → Save as PDF" gives a clean page.
+- Phone number stays on the PDF only, not on the web page.
+
+**Built:** `TimelineItem` and `PrintButton` components (reusable), three new icons, the `/cv` page, print tokens in the theme file, and 5 tests for the CV content.
+
+**Problems and fixes:**
+- The agent first gave the two ML projects a year ("2026") that isn't on my CV. It caught that and removed the made-up dates.
+- One test assumed jobs are sorted by start date, but my CV sorts by end date (Unical 2017–2025 comes before Intplus 2023–2025). The test was wrong, not the data, so the test was fixed.
+- Chrome showed "hydration mismatch" errors on `/cv`. Investigation showed the browser had loaded the page while the dev server was still recompiling. Confirmed with a direct request that the server's HTML was current, and after a clean reload there were no errors.
+
+**Verified:** lint, types, theme rule, 16 tests and the build pass. Checked in Chrome on desktop and phone.
+
+**LinkedIn angle:** "Recruiters read CVs on their phones. So my CV isn't a PDF you have to download: it's a page. The PDF is still one click away."
+
+---
+
 ## 2026-11-11 · Build step 2: the hero
 
 **What happened:** Built the hero in Next.js from the approved mockup, using design-system components only. Every new piece is reusable on its own.
