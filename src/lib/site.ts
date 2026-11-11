@@ -13,7 +13,7 @@ export const site = {
     // TODO: confirm this is the exact LinkedIn URL (CV lists "ojukwugc")
     linkedin: "https://www.linkedin.com/in/ojukwugc",
   },
-  cv: "/godwin-ojukwu-cv.pdf", // TODO: add the PDF to /public
+  cv: "/godwin-ojukwu-cv.pdf", // copy of reference/CV_Godwin.pdf
 };
 
 // The "Contact me" button opens the visitor's email app with everything pre-filled,
