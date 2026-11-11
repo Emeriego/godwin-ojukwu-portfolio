@@ -1,0 +1,50 @@
+# CI: runs on every push and every pull request.
+# A pull request can only be merged into main when all of these checks pass,
+# so nothing broken ever reaches the live site (deployed by Vercel from main).
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# Cancel an older run when a newer commit is pushed to the same branch
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Lint, types, theme and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies (exactly as locked)
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Theme rule (no hard-coded colours in components)
+        run: npm run check:tokens
+
+      - name: Production build
+        run: npm run build
