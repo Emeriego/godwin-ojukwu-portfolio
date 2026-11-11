@@ -72,7 +72,7 @@ This site is itself a case study, so it should show the six competencies too:
 4. Remaining sections
 5. AI chat backend (Route Handler + Gemini, rate limit, streaming)
 6. German version (i18n routes, detection, switch)
-7. Deploy to Vercel
+7. Deploy to Vercel and set up CD: preview per PR, production on merge to `main`, plus a rule that `main` only accepts PRs with passing CI. *Deferred until the site is ready to go live.* CI already runs on every push and PR.
 
 ## Open items
 

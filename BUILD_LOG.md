@@ -213,7 +213,7 @@ Each entry: **What happened** · **Decisions** · **Ownership** (my direction vs
 - **Workflow:** work on a branch, open a **pull request**, review, merge to `main`.
 - **Commits:** 8 small, logical commits following the **Conventional Commits** style (`feat:`, `docs:`, `build:`, `chore:`), each one a single idea with a clear message, instead of one giant "initial" commit.
 - **CI (GitHub Actions):** on every push and pull request, run lint → type check → the theme rule (no hard-coded colours in components) → production build.
-- **CD (Vercel):** preview deploy for every pull request, production deploy when `main` changes. Set up with my Vercel account.
+- **CD (Vercel):** preview deploy for every pull request, production deploy when `main` changes. **Deferred:** I decided to hold off on going live; CD gets set up when the site is ready to launch.
 
 **Ownership:** The repo, PR workflow and CI/CD requirement were mine. The agent chose the commit breakdown and the CI steps, and turned the "no hex codes" design rule into an automated check, so the theme system can't silently break again.
 
