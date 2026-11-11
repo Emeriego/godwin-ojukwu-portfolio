@@ -11,7 +11,7 @@ export default function Nav() {
   const close = () => setOpen(false);
 
   return (
-    <header className="sticky top-0 z-50 px-4 pt-4 sm:px-6">
+    <header className="sticky top-0 z-50 px-4 pt-4 sm:px-6 print:hidden">
       <Surface
         as="nav"
         aria-label="Main"

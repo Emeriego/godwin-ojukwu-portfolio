@@ -120,3 +120,22 @@
   --tile-pink: var(--tile-pink-soft);
   color-scheme: dark;
 }
+
+/* ---------- Print: always light, ink-friendly, no glass (must stay last) ---------- */
+@media print {
+  :root,
+  [data-theme="light"],
+  [data-theme="dark"] {
+    --bg: var(--neutral-light-0);
+    --bg-2: var(--neutral-light-0);
+    --text: var(--neutral-light-ink);
+    --sec: var(--neutral-light-muted);
+    --faint: var(--neutral-light-faint);
+    --accent: var(--brand-primary-deep);
+    --glass: transparent;
+    --glass-border: transparent;
+    --glass-shadow: none;
+    --chip: color-mix(in srgb, var(--neutral-light-ink) 6%, transparent);
+    color-scheme: light;
+  }
+}

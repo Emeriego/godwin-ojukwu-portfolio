@@ -3,7 +3,7 @@ import { site } from "@/lib/site";
 
 export default function Footer() {
   return (
-    <footer className="py-8">
+    <footer className="py-8 print:hidden">
       <Container className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <Text as="span" size="small" tone="muted">
           © {site.year} {site.name} · {site.location}
