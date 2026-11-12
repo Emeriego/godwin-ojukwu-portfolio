@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import { Icon, type IconName } from "./Icon";
 
@@ -10,7 +10,8 @@ import { Icon, type IconName } from "./Icon";
  */
 type QuickTileProps = Omit<ComponentPropsWithoutRef<"button">, "children"> & {
   icon: IconName;
-  label: string;
+  /** Text, or e.g. <FadeText> for animated changes */
+  label: ReactNode;
   /** Icon colour class (use a theme token) */
   iconClassName?: string;
   active?: boolean;

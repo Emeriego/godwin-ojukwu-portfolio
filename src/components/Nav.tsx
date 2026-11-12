@@ -1,13 +1,16 @@
 "use client";
 
 // Client component because of the mobile menu's open/closed state.
+import Link from "next/link";
 import { useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
-import { Button, Icon, Surface } from "@/components/ui";
+import { useLanguage } from "@/components/LanguageProvider";
+import { Button, Icon, SegmentedControl, Surface } from "@/components/ui";
 import { contactHref, sections, site } from "@/lib/site";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const { targetLang: lang, setLang } = useLanguage();
   const close = () => setOpen(false);
 
   return (
@@ -19,15 +22,15 @@ export default function Nav() {
         className="mx-auto max-w-6xl rounded-[1.75rem] px-3 py-2 sm:rounded-full sm:pl-6"
       >
         <div className="flex items-center justify-between gap-3">
-          <a href="#top" onClick={close} className="font-semibold tracking-tight text-text">
+          <Link href="/" onClick={close} className="font-semibold tracking-tight text-text">
             {site.name}
-          </a>
+          </Link>
 
           {/* Section links: tablet width and up */}
           <ul className="hidden items-center gap-1 md:flex">
             {sections.map((s) => (
               <li key={s.id}>
-                <Button variant="ghost" size="sm" href={`#${s.id}`} className="font-medium">
+                <Button variant="ghost" size="sm" href={`/#${s.id}`} className="font-medium">
                   {s.label}
                 </Button>
               </li>
@@ -35,6 +38,16 @@ export default function Nav() {
           </ul>
 
           <div className="flex items-center gap-2">
+            <SegmentedControl
+              label="Language"
+              options={[
+                { value: "en", label: "EN" },
+                { value: "de", label: "DE" },
+              ]}
+              value={lang}
+              onChange={setLang}
+              className="shadow-none"
+            />
             <ThemeToggle />
             <Button href={contactHref} size="sm" className="hidden h-9 sm:inline-flex">
               Contact me
@@ -62,7 +75,7 @@ export default function Nav() {
                   <Button
                     variant="ghost"
                     size="lg"
-                    href={`#${s.id}`}
+                    href={`/#${s.id}`}
                     onClick={close}
                     fullWidth
                     className="justify-start rounded-xl px-3 font-medium text-text"

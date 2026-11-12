@@ -1,34 +1,41 @@
 "use client";
 
-// Client component: the language switch and the chat need state.
+// Client component: the chat needs state, and the text follows the language chosen in the nav.
 import { useState } from "react";
 import {
   AnswerCard,
   Button,
   ChatInput,
   Container,
+  FadeText,
   GlowBackdrop,
-  GradientText,
   Heading,
   Icon,
   QuickTile,
-  SegmentedControl,
   StatusPill,
   Text,
   TypedLine,
   Wordmark,
 } from "@/components/ui";
 import { FluidPortrait } from "@/components/media";
-import { heroCopy, quickTopics, type Lang, type QuickTopic } from "@/content/hero";
+import { useLanguage } from "@/components/LanguageProvider";
+import { heroCopy, quickTopics, type QuickTopic } from "@/content/hero";
 import { site } from "@/lib/site";
 
 type Answer = { question: string; answer: string };
 
 export default function Hero() {
-  const [lang, setLang] = useState<Lang>("en");
+  const { lang } = useLanguage();
   const [topic, setTopic] = useState<QuickTopic | null>(null);
   const [typedQuestion, setTypedQuestion] = useState<string | null>(null);
   const copy = heroCopy[lang];
+
+  // A typed question belongs to the language it was asked in: clear it when the language changes
+  const [prevLang, setPrevLang] = useState(lang);
+  if (prevLang !== lang) {
+    setPrevLang(lang);
+    setTypedQuestion(null);
+  }
 
   // Topic answers are canned for now; typed questions get the real AI chat in build step 5.
   let answer: Answer | null = null;
@@ -42,32 +49,20 @@ export default function Hero() {
       <Wordmark text={site.firstName} className="-bottom-[0.42em]" />
 
       <Container size="md" className="relative z-10 flex flex-col items-center gap-[1.125rem] text-center">
-        <div className="flex flex-wrap items-center justify-center gap-2.5">
-          <SegmentedControl
-            label="Language"
-            options={[
-              { value: "en", label: "Hello" },
-              { value: "de", label: "Hallo" },
-            ]}
-            value={lang}
-            onChange={(l) => {
-              setLang(l);
-              setTypedQuestion(null);
-            }}
-          />
-          <StatusPill>{copy.status}</StatusPill>
-        </div>
+        <StatusPill>
+          <FadeText text={copy.status} />
+        </StatusPill>
 
         <FluidPortrait src="/images/godwin-cutout.png" alt="Portrait of Godwin Ojukwu" priority className="w-56 sm:w-64" />
 
         <Heading level={1} id="hero-title" lang={lang}>
-          <GradientText>{copy.hello}</GradientText>
-          {copy.intro}
+          <FadeText text={copy.hello} wordClassName="text-gradient" />
+          <FadeText text={copy.intro} />
         </Heading>
 
         <div className="-mt-2 flex flex-col items-center gap-2">
           <Text size="lead" weight="semibold" className="text-[clamp(1.25rem,2.4vw,1.5rem)]" lang={lang}>
-            {copy.title}
+            <FadeText text={copy.title} />
           </Text>
           <TypedLine
             lines={copy.lines}
@@ -87,7 +82,7 @@ export default function Hero() {
                 key={t.id}
                 icon={t.icon}
                 iconClassName={t.tone}
-                label={copy.topics[t.id].label}
+                label={<FadeText text={copy.topics[t.id].label} />}
                 active={topic === t.id}
                 onClick={() => {
                   setTypedQuestion(null);
@@ -102,7 +97,7 @@ export default function Hero() {
 
         <div className="mt-2 flex flex-wrap items-center justify-center gap-1">
           <Button variant="secondary" href="/cv" icon={<Icon name="file" size={17} />}>
-            {copy.cv}
+            <FadeText text={copy.cv} />
           </Button>
           <Button variant="ghost" href={site.links.github} icon={<Icon name="github" size={17} />}>
             GitHub

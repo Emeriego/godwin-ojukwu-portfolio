@@ -131,6 +131,7 @@ import { FluidPortrait, PhoneMockup } from "@/components/media";
 | `Container` | size: sm · md · lg · xl · full |
 | `Section` | tone: default · alt · none — spacing: none · sm · md · lg |
 | `Stack` | direction · gap · align · justify · wrap |
+| `SegmentedControl` | label · options · value · onChange · size (sm · md). Sliding thumb animation, equal-width options |
 | `TypedLine` | lines · typeSpeed · eraseSpeed · hold (random order, reduced-motion safe) |
 | `ChatInput` | label · placeholder · onSubmit · extraAction |
 | `QuickTile` | icon · label · iconClassName · active |
@@ -138,6 +139,13 @@ import { FluidPortrait, PhoneMockup } from "@/components/media";
 | `Wordmark` / `GlowBackdrop` | decorative backgrounds for a `relative overflow-hidden` section |
 
 ---
+
+### Language-aware components
+
+- `LanguageProvider` (wraps the app in `layout.tsx`) shares `lang` (shown), `targetLang` (just chosen), `fading` and `setLang`. Read it with `useLanguage()`.
+- `<FadeText text={…} />` (preferred) renders a string whose words **dissolve in one by one, left to right, with a little random timing**, and dissolve out before a language switch. It's barely noticeable, with no blink. Options: `wordClassName` (e.g. `"text-gradient"`), `stagger` (ms between words; long texts speed up automatically). It also works outside the provider, animating whenever its text changes.
+- `<LangFade>` fades a whole block at once. Use it only for things that can't be split into words (e.g. images that change with the language).
+- Controls that *choose* the language (like the nav switch) should use `targetLang`, so they respond instantly while the text fades.
 
 ## 5. The theme system: change colours in one place
 

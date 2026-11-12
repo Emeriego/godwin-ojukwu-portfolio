@@ -8,6 +8,7 @@ export { Surface, surfaceVariants } from "./Surface";
 export { Chip, StatusPill, chipVariants } from "./Chip";
 export { SegmentedControl } from "./SegmentedControl";
 export { TypedLine } from "./TypedLine";
+export { FadeText } from "./FadeText";
 export { ChatInput } from "./ChatInput";
 export { QuickTile } from "./QuickTile";
 export { AnswerCard } from "./AnswerCard";
