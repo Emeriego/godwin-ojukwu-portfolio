@@ -1,6 +1,7 @@
 # Portfolio plan
 
 The agreed plan for the new portfolio. Decisions are explained in [BUILD_LOG.md](BUILD_LOG.md); positioning is in [POSITIONING.md](POSITIONING.md).
+Remaining work, task by task: [TASKS.md](TASKS.md).
 Visual reference: the design mockup (light, dark and About artboards) on claude.ai.
 
 ## Decisions
@@ -20,7 +21,15 @@ Visual reference: the design mockup (light, dark and About artboards) on claude.
 | Languages | English and German; browser-language detection plus a Hello / Hallo switch |
 | Contact | "Contact me" opens a pre-written email; copy-address fallback; CV download; LinkedIn; GitHub |
 | Privacy | No data collected except AI-chat questions (Gemini). A one-line note and a privacy section in the footer. |
-| Analytics | Maybe later: cookieless visitor counts only |
+| Analytics | Cookieless visitor counts (Vercel Web Analytics); no cookies, no banner |
+| Git workflow | Merge `setup/site-structure` into `main` now; then one branch and one PR per build step |
+| Case studies | MDX files, one per case study and language. For launch: ComBridge, then Water-pump ML |
+| Other projects | Keep 3 from the old site: Laundbot, Driveby, HNG Express boilerplate |
+| AI chat | Gemini Flash; rate limits stored in Upstash Redis (per visitor plus a daily site-wide cap); no voice input |
+| German | `/en` and `/de` routes with browser-language detection; the CV page in German too |
+| Testing | Vitest (logic), React Testing Library (components), Playwright (real browsers), all in CI |
+| Hosting | Vercel on a `.vercel.app` address at launch; a custom domain later, with redirects |
+| `/design-system` | Public and linked from the portfolio case study, but kept out of search results |
 | Responsive | Phones, tablets, laptops, large monitors and TVs. Everything is sized in rem with a base size that grows on large screens (17px at 1680px+, 19px at 1920px+, 24px on 4K); fluid headings; a collapsible menu on small screens; tested at 375, 768, 1440 and 1920+ widths. |
 
 ## Home page, top to bottom
@@ -80,7 +89,5 @@ This site is itself a case study, so it should show the six competencies too:
 
 - Larger cut-out photo (1200px+ wide)
 - Wordmark design
-- Voice input in the chat (Deepgram)?
 - How much Godwin writes himself vs. the agent
-- Hosting: `.vercel.app` vs. a custom domain
 - Update the CV and LinkedIn headline to "Software Developer"

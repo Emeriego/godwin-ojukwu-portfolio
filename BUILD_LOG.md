@@ -204,6 +204,63 @@ Each entry: **What happened** · **Decisions** · **Ownership** (my direction vs
 
 ---
 
+## 2026-11-11 · Review: "it's still a blink" → words dissolve one by one
+
+**What happened:** The block fade still read as a blink to me: the whole text vanished and reappeared at once. I wanted the change to be barely noticeable, gradual, left to right, a bit random. I chose the agent's option A: words dissolve in one by one.
+
+**Built:** a reusable **`FadeText`** component. It splits text into words; on a change, the old words dissolve out in a quick left-to-right wave (opacity + slight blur), the language swaps, and the new words dissolve in one after another, with a small repeatable "random" offset per word so it feels organic. Used for the status pill, headline, title, tile labels, answer card and View CV. The answer card animates too when you pick a different topic.
+
+**Problems and fixes:** Measured in Chrome over three switches in a row. The **first** switch looked fine, but from the **second** switch on, the old words vanished instantly, leaving about 0.25s of empty headline. Cause: the words were still holding their fade-in *animation*, and a CSS *transition* can't start from an animated value, so the fade-out never ran. Fix: the fade-out is now an animation too, which always starts from fully visible. Also, the first new word now starts with no delay, so the gap is gone.
+
+**Verified:** word-by-word opacity sampled every 50ms on three consecutive switches. Each one: the new first word appears within ~30ms of the swap, the others follow left to right, and everything settles by ~0.6s, with no empty moment.
+
+**Review:** I asked for it slower. Retuned: words fade in over 850ms (was 520), 95ms between words (was 55), more random spread, and a gentler fade-out (220ms). Measured: the full rewrite now takes about 1.1s, with the first new word visible ~80ms after the swap and still no empty moment.
+
+**Lesson:** Test the *second* run of an animation, not just the first. State left over from the first run is where this bug was hiding.
+
+**LinkedIn angle:** "My language switch looked perfect the first time and broke the second time. The bug: you can't CSS-transition away from an animated value."
+
+---
+
+## 2026-11-11 · Language change cross-fades the text
+
+**What happened:** With the switch gliding, the text itself still swapped instantly. I approved a soft fade for the text as well.
+
+**Built:**
+- The **LanguageProvider** now separates the language just *chosen* (the switch moves immediately) from the language *shown* (the text). On a switch: the text fades out (180ms), the language swaps while it's invisible, then the new text fades back in.
+- A reusable **`<LangFade>`** wrapper: any language-dependent block wrapped in it fades automatically. The hero uses it for the status pill, headline, title block, chat area and CV links; the portrait doesn't fade.
+- A slight 2px blur on the way out makes it feel like a dissolve rather than a blink.
+
+**Verified in Chrome** (opacity sampled every 60ms): 1.00 → 0.19 → 0.02 → *swap* → 0.74 → 0.93 → 1.00 in about 0.4s, in both directions, including the very first switch after loading.
+
+---
+
+## 2026-11-11 · Review: the switch should glide, not snap
+
+**What happened:** Switching EN ↔ DE felt abrupt: the green highlight jumped from one option to the other. I asked for a fluid transition, and for the component to stay reusable.
+
+**Fix (in the reusable SegmentedControl, so every use gets it):** a single green "thumb" now **slides** between options, with an Apple-style ease-out curve (350ms), and the labels fade between colours. The options are equal width, so the slide is pure CSS: no measuring, no JavaScript animation. Reduced-motion visitors get an instant switch.
+
+**Verified:** sampled the thumb's position in Chrome every 70ms after clicking DE: 0 → 12 → 40 → 44 → 46px, a smooth glide that settles gently. Lint, types and the theme rule pass.
+
+---
+
+## 2026-11-11 · Language switch moves to the nav
+
+**What happened:** I decided to remove the Hello | Hallo toggle from the hero. Since the site will have a language switch anyway, it belongs in the nav bar, as a plain **EN | DE** switch.
+
+**Built:**
+- A shared **LanguageProvider** (React context), so one switch in the nav changes text anywhere on the page. It also keeps `<html lang>` correct for screen readers.
+- **EN | DE** in the nav, reusing the SegmentedControl component; the hero now reads the language from the provider. The headline still greets with "Hello" or "Hallo".
+- A typed question is cleared when the language changes.
+- **Bug found along the way:** nav links pointed to `#projects`, which only works on the home page. On `/cv` they did nothing. Now `/#projects`, using Next.js links, so they work from every page.
+
+**Verified:** lint, types, theme rule and 16 tests pass. In Chrome, DE switches the hero to German and sets `<html lang="de">`. The nav fits on phones (375px and 320px).
+
+**Not yet:** proper `/en` and `/de` addresses and browser-language detection (build step 6). The choice isn't remembered between visits yet.
+
+---
+
 ## 2026-11-11 · Review: the wordmark should touch the next section
 
 **What happened:** I noticed the faint "Godwin" wordmark ended about 20px above the hero's bottom edge. In the approved design, the letters run into the boundary, so they look embedded, as if coming from the next section.
@@ -326,8 +383,59 @@ Each entry: **What happened** · **Decisions** · **Ownership** (my direction vs
 
 ---
 
+## 2026-11-12 · A task list to measure progress
+
+**What happened:** Before building further, I asked for the rest of the project broken into small, manageable tasks, so we have one list to measure progress and speed against and nothing gets forgotten.
+
+**Decisions:**
+- New file `TASKS.md`: 117 tasks in 10 phases (housekeeping, decisions, content, build steps 3–7, quality, launch, brand and outreach).
+- Each task has a size (S/M/L), an owner (me, the agent, or both) and a 🔒 marker when it waits on a decision or content from me.
+- Done tasks get a date, so ticks per week show our speed.
+- Decisions and content I owe are their own phases, because they block most of the building.
+
+**Ownership:** The request and the goal (control, progress, speed) were mine. The agent audited the plan, build log and code to find open work, including things not in the plan (stale README, `.env.example` hidden by `.gitignore`, the LinkedIn URL TODO).
+
+**LinkedIn angle:** "Before writing another line of code, I had my AI agent break the rest of my portfolio into 117 small tasks. Planning is where you stay in control of an agent."
+
+---
+
+## 2026-11-12 · Phase 1: twelve decisions in one sitting
+
+**What happened:** I worked through every open decision on the task list. For each one, the agent laid out the options, trade-offs and a recommendation, and I chose.
+
+**Decisions:**
+- **Git:** merge the current branch into `main` now, then one branch and one PR per build step.
+- **Case studies:** MDX files. ComBridge and Water-pump ML for launch; the spelling game and app vault come later.
+- **Old projects:** I cut the agent's suggested five or six down to **three**: Laundbot, Driveby and the HNG open-source boilerplate.
+- **AI chat:** Gemini Flash, with Upstash Redis for rate limits (an in-memory counter resets constantly on Vercel's short-lived servers). **No voice input**: the agent suggested "later", and I dropped it entirely.
+- **German:** `/en` and `/de` URLs and a German CV page.
+- **Testing:** React Testing Library and Playwright on top of Vitest, all in CI.
+- **Hosting:** launch on `.vercel.app` and add a custom domain later. The agent recommended a domain from day one; I chose to start free.
+- **Analytics:** cookieless counts only, so there's no cookie banner and the privacy promise holds.
+- **`/design-system`:** public as proof of the design system, but not in search results.
+
+**Ownership:** I made all twelve calls. I went against the agent's recommendation three times: fewer projects, no voice input at all, and no domain at launch.
+
+**LinkedIn angle:** "Twelve architecture and product decisions in one sitting. My AI agent brought the options and trade-offs; I made the calls, and three times I overruled its recommendation."
+
+---
+
+## 2026-11-12 · Phase 0: housekeeping before step 3
+
+**What happened:** Cleared the small open items before starting the Projects step.
+
+**Done:**
+- The **language switch in the nav** (soft cross-fade, word by word) passes lint, type check, theme rule, 16 tests and the build. The agent checked it in Chrome at desktop, tablet and phone size: the hero switches to German, `<html lang>` follows, no console errors. The nav links stay English until step 6.
+- **Found while testing:** on phones the name in the nav wrapped onto two lines. I chose to show only "Godwin" on small screens; the full name stays on tablet and up, and screen readers still hear the full name.
+- `README.md` rewritten (it still described the starter project), the stale open-items list in this log replaced by `TASKS.md`, LinkedIn URL confirmed, `.gitignore` now lets `.env.example` through (needed for the AI chat keys).
+- **CV in sync:** the CV existed twice (`cv.ts` for the web page, a separate PDF). Decided the PDF will be printed from the `/cv` page, so there's one source and they can't drift.
+
+**Ownership:** I made the calls (the nav name, the CV source of truth, when to commit and open the PR). The agent ran the checks, tested in the browser and spotted the nav wrap.
+
+**Problems and fixes:** The agent can't test Safari, so that check is left for me.
+
+---
+
 ## Open items
-- Chat: voice input (Deepgram)? (Rotating example questions in the chat box: probably skip, since the hero already has one moving element.)
-- Photo (headshot) and wordmark from Godwin.
-- Remaining plan items: build order, how much I write myself vs. the agent, hosting/domain.
-- Then: write `PLAN.md`, get sign-off, start building.
+
+Open work is tracked task by task in [TASKS.md](TASKS.md).
