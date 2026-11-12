@@ -32,6 +32,8 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...except the example file, which lists the variable names without secrets
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +41,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# private reference material (CV drafts, notes, screenshots)
+/reference/
+
+# personal notes, not part of the project
+/myClaudeWFGuide.md

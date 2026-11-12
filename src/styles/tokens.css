@@ -1,0 +1,141 @@
+/*
+  ============================================================
+  THEME: the single source of truth for every colour on the site.
+  ============================================================
+
+  Two layers:
+
+  1. BRAND PALETTE: the raw colours. Change a value here and it flows
+     into every token, every component, light and dark mode alike.
+
+  2. SEMANTIC TOKENS: what each colour is *for* (background, text,
+     accent…), defined per theme using the palette.
+
+  Components only ever use the semantic tokens (via Tailwind classes like
+  bg-accent, text-sec, border-line), never a hex code. So to re-theme:
+  edit layer 1 (new brand) or layer 2 (fine-tune one theme). Nothing else.
+
+  To reuse in another project: copy this file, ui.css and src/components/{ui,media}.
+*/
+
+/* ---------- 1. Brand palette ---------- */
+:root {
+  --brand-primary: #45b649; /* main green */
+  --brand-primary-deep: #2a7f35; /* darker green: readable on light backgrounds */
+  --brand-secondary: #dce35b; /* lime: gradient partner */
+  --brand-highlight: #f27121; /* orange: status dot and accent tile */
+
+  --neutral-light-0: #ffffff;
+  --neutral-light-1: #f5f5f7; /* Apple off-white */
+  --neutral-light-ink: #1d1d1f; /* near-black text */
+  --neutral-light-muted: #6e6e73;
+  --neutral-light-faint: #707075;
+
+  --neutral-dark-1: #4d4d4d; /* old-portfolio grey */
+  --neutral-dark-2: #585858;
+  --neutral-dark-ink: #eeeeee;
+  --neutral-dark-muted: #d0d0d0;
+  --neutral-dark-faint: #c2c2c2;
+  --neutral-dark-on-primary: #0b2410; /* text on the green button in dark mode */
+
+  --device-frame: #1d1d1f; /* phone mockup body */
+  --device-screen: #101211;
+  --device-ink: #f5f5f7;
+  --device-muted: #a1a1a6;
+
+  /* Icon accents for quick-topic tiles (deep for light mode, soft for dark mode) */
+  --tile-teal-deep: #0f8a78;
+  --tile-teal-soft: #5dcaa5;
+  --tile-purple-deep: #6a5acd;
+  --tile-purple-soft: #afa9ec;
+  --tile-amber-deep: #a86a12;
+  --tile-amber-soft: #ef9f27;
+  --tile-pink-deep: #b03a6a;
+  --tile-pink-soft: #ed93b1;
+}
+
+/* ---------- 2. Semantic tokens: light ---------- */
+:root,
+[data-theme="light"] {
+  --bg: var(--neutral-light-1);
+  --bg-2: var(--neutral-light-0);
+  --text: var(--neutral-light-ink);
+  --sec: var(--neutral-light-muted); /* 4.5:1 on --bg */
+  --faint: var(--neutral-light-faint);
+  --accent: var(--brand-primary-deep); /* buttons: white text passes contrast */
+  --on-accent: var(--neutral-light-0);
+  --highlight: var(--brand-highlight);
+
+  --glass: color-mix(in srgb, var(--neutral-light-0) 58%, transparent);
+  --glass-border: color-mix(in srgb, var(--neutral-light-ink) 7%, transparent);
+  --glass-shadow: inset 0 1px 0 color-mix(in srgb, var(--neutral-light-0) 90%, transparent),
+    0 10px 30px color-mix(in srgb, black 6%, transparent);
+  --chip: color-mix(in srgb, var(--neutral-light-ink) 4.5%, transparent);
+  --patch: color-mix(in srgb, var(--neutral-light-ink) 7%, transparent);
+  --wordmark: color-mix(in srgb, var(--neutral-light-ink) 3.5%, transparent);
+
+  --gradient: linear-gradient(90deg, var(--brand-primary-deep), var(--brand-primary));
+  --blob: linear-gradient(150deg, var(--brand-secondary), var(--brand-primary));
+  --glow: color-mix(in srgb, var(--brand-primary) 30%, transparent);
+  --blob-shadow: color-mix(in srgb, var(--brand-primary-deep) 22%, transparent);
+  --glow-2: color-mix(in srgb, var(--brand-secondary) 26%, transparent);
+
+  --tile-teal: var(--tile-teal-deep);
+  --tile-green: var(--brand-primary-deep);
+  --tile-purple: var(--tile-purple-deep);
+  --tile-amber: var(--tile-amber-deep);
+  --tile-pink: var(--tile-pink-deep);
+  color-scheme: light;
+}
+
+/* ---------- 2. Semantic tokens: dark ---------- */
+[data-theme="dark"] {
+  --bg: var(--neutral-dark-1);
+  --bg-2: var(--neutral-dark-2);
+  --text: var(--neutral-dark-ink);
+  --sec: var(--neutral-dark-muted);
+  --faint: var(--neutral-dark-faint);
+  --accent: var(--brand-primary);
+  --on-accent: var(--neutral-dark-on-primary);
+  --highlight: var(--brand-highlight);
+
+  --glass: color-mix(in srgb, white 8%, transparent);
+  --glass-border: color-mix(in srgb, white 14%, transparent);
+  --glass-shadow: inset 0 1px 0 color-mix(in srgb, white 10%, transparent),
+    0 10px 30px color-mix(in srgb, black 22%, transparent);
+  --chip: color-mix(in srgb, white 10%, transparent);
+  --patch: color-mix(in srgb, black 20%, transparent);
+  --wordmark: color-mix(in srgb, white 5%, transparent);
+
+  --gradient: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+  --blob: linear-gradient(150deg, var(--brand-secondary), var(--brand-primary));
+  --glow: color-mix(in srgb, var(--brand-primary) 30%, transparent);
+  --blob-shadow: color-mix(in srgb, black 30%, transparent);
+  --glow-2: color-mix(in srgb, var(--brand-secondary) 22%, transparent);
+
+  --tile-teal: var(--tile-teal-soft);
+  --tile-green: color-mix(in srgb, var(--brand-primary) 70%, white);
+  --tile-purple: var(--tile-purple-soft);
+  --tile-amber: var(--tile-amber-soft);
+  --tile-pink: var(--tile-pink-soft);
+  color-scheme: dark;
+}
+
+/* ---------- Print: always light, ink-friendly, no glass (must stay last) ---------- */
+@media print {
+  :root,
+  [data-theme="light"],
+  [data-theme="dark"] {
+    --bg: var(--neutral-light-0);
+    --bg-2: var(--neutral-light-0);
+    --text: var(--neutral-light-ink);
+    --sec: var(--neutral-light-muted);
+    --faint: var(--neutral-light-faint);
+    --accent: var(--brand-primary-deep);
+    --glass: transparent;
+    --glass-border: transparent;
+    --glass-shadow: none;
+    --chip: color-mix(in srgb, var(--neutral-light-ink) 6%, transparent);
+    color-scheme: light;
+  }
+}
