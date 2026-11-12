@@ -10,7 +10,6 @@ export const site = {
   year: 2026,
   links: {
     github: "https://github.com/Emeriego",
-    // TODO: confirm this is the exact LinkedIn URL (CV lists "ojukwugc")
     linkedin: "https://www.linkedin.com/in/ojukwugc",
   },
   cv: "/godwin-ojukwu-cv.pdf", // copy of reference/CV_Godwin.pdf
