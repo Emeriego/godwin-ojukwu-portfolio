@@ -22,8 +22,15 @@ export default function Nav() {
         className="mx-auto max-w-6xl rounded-[1.75rem] px-3 py-2 sm:rounded-full sm:pl-6"
       >
         <div className="flex items-center justify-between gap-3">
-          <Link href="/" onClick={close} className="font-semibold tracking-tight text-text">
-            {site.name}
+          {/* First name only on phones, so it fits on one line next to the controls */}
+          <Link
+            href="/"
+            onClick={close}
+            aria-label={site.name}
+            className="whitespace-nowrap font-semibold tracking-tight text-text"
+          >
+            <span className="sm:hidden">{site.firstName}</span>
+            <span className="hidden sm:inline">{site.name}</span>
           </Link>
 
           {/* Section links: tablet width and up */}
